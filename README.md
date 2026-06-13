@@ -43,5 +43,5 @@ Depa\SuluBlockFragmentsBundle\SuluBlockFragmentsBundle::class => ['all' => true]
 
 ## License
 
-Proprietary — Copyright (c) depa Berlin GmbH & Co. KG. All rights reserved.
+Proprietary — Copyright (c) designpark Internet GmbH. All rights reserved.
 See [LICENSE](LICENSE) for details.
