@@ -1,0 +1,8 @@
+{% set aria = '' %}
+{% for item in aria_blocks %}
+    {% set part = include('includes/_partials/aria/' ~ item.type ~ '.html.twig', { item: item })|trim %}
+    {% if part %}
+        {% set aria = (aria ~ ' ' ~ part)|trim %}
+    {% endif %}
+{% endfor %}
+{{ aria|raw }}
