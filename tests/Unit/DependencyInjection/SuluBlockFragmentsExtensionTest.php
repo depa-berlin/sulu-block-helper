@@ -56,7 +56,7 @@ class SuluBlockFragmentsExtensionTest extends TestCase
         $configs = $this->container->getExtensionConfig('twig');
         $paths = $configs[0]['paths'] ?? [];
         foreach (array_keys($paths) as $path) {
-            self::assertDirectoryExists($path);
+            self::assertDirectoryExists((string) $path);
         }
     }
 }
