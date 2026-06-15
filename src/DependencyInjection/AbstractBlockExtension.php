@@ -14,7 +14,8 @@ abstract class AbstractBlockExtension extends Extension implements PrependExtens
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $metadata = $this->loadMetadataFromXml($this->getBlocksDir());
+        $blocksDir = $this->getBlocksDir();
+        $metadata = $this->loadMetadataFromXml($blocksDir);
 
         $container->setParameter($this->getMetadataParameterName(), [
             'bundle'   => $this->getBundleName(),
@@ -22,6 +23,8 @@ abstract class AbstractBlockExtension extends Extension implements PrependExtens
             'blocks'   => $metadata['blocks'],
             'children' => $metadata['children'],
         ]);
+
+        $container->setParameter($this->getAlias() . '.blocks_dir', $blocksDir);
     }
 
     public function prepend(ContainerBuilder $container): void
