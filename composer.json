@@ -1,5 +1,5 @@
 {
-    "name": "depa-berlin/sulu-block-helper",
+    "name": "depa/sulu-block-helper",
     "description": "Shared XML fragments, Twig partials and Helper for Sulu block bundles",
     "type": "symfony-bundle",
     "license": "proprietary",
