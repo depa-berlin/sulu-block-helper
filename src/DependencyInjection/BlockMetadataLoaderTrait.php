@@ -23,9 +23,19 @@ trait BlockMetadataLoaderTrait
         $finder = (new Finder())->files()->in($blocksDir)->name('*.xml');
 
         foreach ($finder as $file) {
-            $xml = @simplexml_load_file($file->getRealPath());
+            \libxml_use_internal_errors(true);
+            $xml = \simplexml_load_file($file->getRealPath());
+            $errors = \libxml_get_errors();
+            \libxml_clear_errors();
+            \libxml_use_internal_errors(false);
+
             if ($xml === false) {
-                continue;
+                $messages = \implode('; ', \array_map(static fn(\LibXMLError $e) => \trim($e->message), $errors));
+                throw new \RuntimeException(\sprintf(
+                    'Failed to parse block XML "%s": %s',
+                    $file->getRealPath(),
+                    $messages ?: 'unknown error',
+                ));
             }
 
             $xml->registerXPathNamespace('s', 'http://schemas.sulu.io/template/template');

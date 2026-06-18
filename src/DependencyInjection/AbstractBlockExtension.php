@@ -69,11 +69,35 @@ abstract class AbstractBlockExtension extends Extension implements PrependExtens
         return dirname($fileName);
     }
 
-    abstract protected function getBundleName(): string;
+    protected function getBundleName(): string
+    {
+        $shortName = (new \ReflectionClass($this))->getShortName();
 
-    abstract protected function getPackageName(): string;
+        return (string) preg_replace('/Extension$/', 'Bundle', $shortName);
+    }
 
-    abstract protected function getMetadataParameterName(): string;
+    protected function getPackageName(): string
+    {
+        $composerFile = $this->getReflectionDir() . '/../../composer.json';
 
-    abstract protected function getSuluAdminTemplateKey(): string;
+        if (\is_file($composerFile)) {
+            $data = \json_decode((string) \file_get_contents($composerFile), true);
+
+            if (\is_array($data) && isset($data['name']) && \is_string($data['name'])) {
+                return $data['name'];
+            }
+        }
+
+        return 'depa/' . \str_replace('_', '-', $this->getAlias());
+    }
+
+    protected function getMetadataParameterName(): string
+    {
+        return $this->getAlias() . '.bundle_metadata';
+    }
+
+    protected function getSuluAdminTemplateKey(): string
+    {
+        return $this->getAlias();
+    }
 }
