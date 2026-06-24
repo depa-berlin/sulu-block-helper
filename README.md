@@ -31,10 +31,18 @@ Reusable XML include files for Sulu block templates:
 | `aria/aria-attr--aria-label.html.twig` | `aria-label` attribute |
 | `aria/aria-attr--heading.html.twig` | `role="heading" aria-level="…"` |
 
+### Admin field type (`Resources/js/`)
+
+Registers the `config_line` field type (a plain single-line input) used by the
+`attr_class` / `attr_id` fragments. This must be compiled into the Sulu admin —
+see the installation step below.
+
 ## Requirements
 
 - PHP 8.2+
 - Symfony 7.0+
+- `lubomirfiala/sulu-preview-nav` — pulled in automatically; provides the
+  `sulu_block_preview` Twig function used by the block render partials.
 
 ## Installation
 
@@ -52,6 +60,28 @@ Without Symfony Flex, register the bundle manually in `config/bundles.php`:
 ```php
 Depa\SuluBlockHelperBundle\SuluBlockHelperBundle::class => ['all' => true],
 ```
+
+### Admin build (required)
+
+The bundle ships an admin field type (`config_line`). It is **not** active until
+its JavaScript is imported into your project's admin entry and the admin is
+rebuilt — without this, blocks using `attr_class` / `attr_id` will fail to render
+in the admin with *"There is no field with key 'config_line' registered"*.
+
+1. Add the import to `assets/admin/app.js`:
+
+   ```js
+   import '../../vendor/depa/sulu-block-helper/Resources/js';
+   ```
+
+2. Rebuild the admin:
+
+   ```bash
+   cd assets/admin && npm install && npm run build
+   ```
+
+   After rebuilding, hard-reload the admin (the JS filename is content-hashed,
+   so a cached browser may still load the old bundle).
 
 ## License
 
