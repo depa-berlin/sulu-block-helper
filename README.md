@@ -42,7 +42,12 @@ Reusable XML include files for Sulu block templates:
 composer require depa/sulu-block-helper
 ```
 
-Register the bundle in `config/bundles.php`:
+If your project uses **Symfony Flex** (the default in the Sulu/Symfony
+skeleton), the bundle is registered in `config/bundles.php` automatically —
+skip the next step. Adding it manually on top would create a duplicate
+registration.
+
+Without Symfony Flex, register the bundle manually in `config/bundles.php`:
 
 ```php
 Depa\SuluBlockHelperBundle\SuluBlockHelperBundle::class => ['all' => true],
