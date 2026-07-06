@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Twig extensions shared by the depa/sulu-block-* bundles.
+    # autoconfigure applies the `twig.extension` tag automatically.
+    Depa\SuluBlockHelperBundle\Twig\:
+        resource: '../../src/Twig/'

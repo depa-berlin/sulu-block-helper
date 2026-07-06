@@ -31,16 +31,32 @@ Reusable XML include files for Sulu block templates:
 | `aria/aria-attr--aria-label.html.twig` | `aria-label` attribute |
 | `aria/aria-attr--heading.html.twig` | `role="heading" aria-level="…"` |
 
+### Twig extensions (`src/Twig/`)
+
+Registered automatically as services (no configuration needed), available in
+both the admin and website contexts:
+
+| Function / filter | Purpose |
+|---|---|
+| `country(code)` | ISO 3166-1 alpha-2 code → localised country name (via `symfony/intl`) |
+| `obfuscate(mail[, text])` | ROT13 spam-protected `mailto:` link — **requires the website JS**, see below |
+
 ### Admin field type (`Resources/js/`)
 
 Registers the `config_line` field type (a plain single-line input) used by the
 `attr_class` / `attr_id` fragments. This must be compiled into the Sulu admin —
 see the installation step below.
 
+### Website script (`Resources/js/website/`)
+
+Decodes the ROT13 links produced by the `obfuscate` Twig function on click.
+Must be imported into your project's **website** asset build — see below.
+
 ## Requirements
 
 - PHP 8.2+
 - Symfony 7.0+
+- `symfony/intl` — pulled in automatically; backs the `country` Twig function.
 - `lubomirfiala/sulu-preview-nav` — pulled in automatically; provides the
   `sulu_block_preview` Twig function used by the block render partials.
 
@@ -82,6 +98,21 @@ in the admin with *"There is no field with key 'config_line' registered"*.
 
    After rebuilding, hard-reload the admin (the JS filename is content-hashed,
    so a cached browser may still load the old bundle).
+
+### Website build (required for `obfuscate`)
+
+The `obfuscate` Twig function renders email links ROT13-encoded; a small
+frontend script reverses this on click. Without it, obfuscated `mailto:` links
+point at the scrambled address and do not work. Import it once into your
+project's **website** asset entry (the file self-initialises on
+`DOMContentLoaded`):
+
+```js
+import '../../vendor/depa/sulu-block-helper/Resources/js/website';
+```
+
+Then rebuild your website assets. This is only needed if you actually use the
+`obfuscate` function (e.g. via the `block--content-account-address` block).
 
 ## License
 

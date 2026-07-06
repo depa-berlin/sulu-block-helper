@@ -6,6 +6,8 @@
     "require": {
         "php": "^8.2",
         "symfony/framework-bundle": "^7.0",
+        "symfony/intl": "^7.0",
+        "twig/twig": "^3.0",
         "lubomirfiala/sulu-preview-nav": "^0.1.2"
     },
     "require-dev": {
