@@ -21,6 +21,9 @@ abstract class AbstractBlockBundle extends AbstractBundle
 {
     use BlockMetadataLoaderTrait;
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void
     {
         $blocksDir = $this->getBlocksDir();

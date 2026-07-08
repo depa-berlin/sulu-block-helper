@@ -8,6 +8,7 @@ use Depa\SuluBlockHelperBundle\SuluBlockHelperBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class SuluBlockHelperBundleTest extends TestCase
 {
@@ -24,9 +25,18 @@ class SuluBlockHelperBundleTest extends TestCase
         $this->bundle = new SuluBlockHelperBundle();
     }
 
+    private function getExtension(): ExtensionInterface&PrependExtensionInterface
+    {
+        $extension = $this->bundle->getContainerExtension();
+        self::assertInstanceOf(ExtensionInterface::class, $extension);
+        self::assertInstanceOf(PrependExtensionInterface::class, $extension);
+
+        return $extension;
+    }
+
     public function testLoadExtensionExposesBlockMetadata(): void
     {
-        $this->bundle->getContainerExtension()->load([], $this->container);
+        $this->getExtension()->load([], $this->container);
 
         self::assertTrue($this->container->hasParameter('sulu_block_helper.bundle_metadata'));
         self::assertTrue($this->container->hasParameter('sulu_block_helper.blocks_dir'));
@@ -38,7 +48,7 @@ class SuluBlockHelperBundleTest extends TestCase
         $twigExtension->method('getAlias')->willReturn('twig');
         $this->container->registerExtension($twigExtension);
 
-        $this->bundle->getContainerExtension()->prepend($this->container);
+        $this->getExtension()->prepend($this->container);
 
         $configs = $this->container->getExtensionConfig('twig');
         self::assertNotEmpty($configs);
@@ -47,7 +57,7 @@ class SuluBlockHelperBundleTest extends TestCase
 
     public function testPrependDoesNotFailWithoutTwig(): void
     {
-        $this->bundle->getContainerExtension()->prepend($this->container);
+        $this->getExtension()->prepend($this->container);
         $this->addToAssertionCount(1);
     }
 
@@ -57,7 +67,7 @@ class SuluBlockHelperBundleTest extends TestCase
         $twigExtension->method('getAlias')->willReturn('twig');
         $this->container->registerExtension($twigExtension);
 
-        $this->bundle->getContainerExtension()->prepend($this->container);
+        $this->getExtension()->prepend($this->container);
 
         $configs = $this->container->getExtensionConfig('twig');
         $paths = $configs[0]['paths'] ?? [];

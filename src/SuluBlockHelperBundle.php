@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 class SuluBlockHelperBundle extends AbstractBlockBundle
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void
     {
         parent::loadExtension($config, $configurator, $container);
