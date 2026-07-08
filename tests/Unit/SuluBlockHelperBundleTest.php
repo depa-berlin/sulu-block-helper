@@ -2,28 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Depa\SuluBlockHelperBundle\Tests\Unit\DependencyInjection;
+namespace Depa\SuluBlockHelperBundle\Tests\Unit;
 
-use Depa\SuluBlockHelperBundle\DependencyInjection\SuluBlockHelperExtension;
+use Depa\SuluBlockHelperBundle\SuluBlockHelperBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-class SuluBlockHelperExtensionTest extends TestCase
+class SuluBlockHelperBundleTest extends TestCase
 {
     private ContainerBuilder $container;
-    private SuluBlockHelperExtension $extension;
+    private SuluBlockHelperBundle $bundle;
 
     protected function setUp(): void
     {
         $this->container = new ContainerBuilder();
-        $this->extension = new SuluBlockHelperExtension();
+        $this->bundle = new SuluBlockHelperBundle();
     }
 
-    public function testLoadDoesNotThrow(): void
+    public function testLoadExtensionExposesBlockMetadata(): void
     {
-        $this->extension->load([], $this->container);
-        $this->addToAssertionCount(1);
+        $this->bundle->getContainerExtension()->load([], $this->container);
+
+        self::assertTrue($this->container->hasParameter('sulu_block_helper.bundle_metadata'));
+        self::assertTrue($this->container->hasParameter('sulu_block_helper.blocks_dir'));
     }
 
     public function testPrependRegistersTwigPathWhenTwigIsAvailable(): void
@@ -32,7 +34,7 @@ class SuluBlockHelperExtensionTest extends TestCase
         $twigExtension->method('getAlias')->willReturn('twig');
         $this->container->registerExtension($twigExtension);
 
-        $this->extension->prepend($this->container);
+        $this->bundle->getContainerExtension()->prepend($this->container);
 
         $configs = $this->container->getExtensionConfig('twig');
         self::assertNotEmpty($configs);
@@ -41,7 +43,7 @@ class SuluBlockHelperExtensionTest extends TestCase
 
     public function testPrependDoesNotFailWithoutTwig(): void
     {
-        $this->extension->prepend($this->container);
+        $this->bundle->getContainerExtension()->prepend($this->container);
         $this->addToAssertionCount(1);
     }
 
@@ -51,7 +53,7 @@ class SuluBlockHelperExtensionTest extends TestCase
         $twigExtension->method('getAlias')->willReturn('twig');
         $this->container->registerExtension($twigExtension);
 
-        $this->extension->prepend($this->container);
+        $this->bundle->getContainerExtension()->prepend($this->container);
 
         $configs = $this->container->getExtensionConfig('twig');
         $paths = $configs[0]['paths'] ?? [];

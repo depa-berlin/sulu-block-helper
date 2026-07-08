@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Depa\SuluBlockHelperBundle\DependencyInjection;
+namespace Depa\SuluBlockHelperBundle;
 
 use Symfony\Component\Finder\Finder;
 

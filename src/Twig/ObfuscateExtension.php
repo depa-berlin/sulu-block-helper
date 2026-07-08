@@ -11,7 +11,7 @@ use Twig\TwigFunction;
 /**
  * Spam-protects email addresses with ROT13. The rendered markup only ever
  * contains the rot13'd address in the `mailto:` href, so scrapers cannot read
- * it; the shipped frontend module (Resources/js/website) reverses the ROT13 on
+ * it; the shipped frontend module (assets/website) reverses the ROT13 on
  * click for real users. Without that JS wired into the website build, the
  * generated links do not work — see the bundle README.
  */

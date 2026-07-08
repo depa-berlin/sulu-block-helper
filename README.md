@@ -6,14 +6,14 @@ This bundle provides the common foundation that all other `depa/sulu-block-*` bu
 
 ## Contents
 
-### Base Classes (`src/DependencyInjection/`)
+### Base Classes (`src/`)
 
 | Class | Purpose |
 |---|---|
-| `AbstractBlockExtension` | Base Extension for all block bundles — registers blocks dir, Twig paths and metadata parameter |
+| `AbstractBlockBundle` | Base bundle (extends Symfony `AbstractBundle`) for all block bundles — registers the block directory with `sulu_admin`, the Twig templates path and block-metadata parameters |
 | `BlockMetadataLoaderTrait` | Reads block XML files and extracts block/child metadata |
 
-### XML Fragments (`Resources/config/_fragments/`)
+### XML Fragments (`config/_fragments/`)
 
 Reusable XML include files for Sulu block templates:
 
@@ -23,7 +23,7 @@ Reusable XML include files for Sulu block templates:
 | `attr_id.xml` | HTML ID input field |
 | `config_image.xml` | Image configuration (retina, loading, priority) |
 
-### Twig Partials (`Resources/views/includes/_partials/`)
+### Twig Partials (`templates/includes/_partials/`)
 
 | Partial | Purpose |
 |---|---|
@@ -41,13 +41,13 @@ both the admin and website contexts:
 | `country(code)` | ISO 3166-1 alpha-2 code → localised country name (via `symfony/intl`) |
 | `obfuscate(mail[, text])` | ROT13 spam-protected `mailto:` link — **requires the website JS**, see below |
 
-### Admin field type (`Resources/js/`)
+### Admin field type (`assets/`)
 
 Registers the `config_line` field type (a plain single-line input) used by the
 `attr_class` / `attr_id` fragments. This must be compiled into the Sulu admin —
 see the installation step below.
 
-### Website script (`Resources/js/website/`)
+### Website script (`assets/website/`)
 
 Decodes the ROT13 links produced by the `obfuscate` Twig function on click.
 Must be imported into your project's **website** asset build — see below.
@@ -87,7 +87,7 @@ in the admin with *"There is no field with key 'config_line' registered"*.
 1. Add the import to `assets/admin/app.js`:
 
    ```js
-   import '../../vendor/depa/sulu-block-helper/Resources/js';
+   import '../../vendor/depa/sulu-block-helper/assets';
    ```
 
 2. Rebuild the admin:
@@ -108,7 +108,7 @@ project's **website** asset entry (the file self-initialises on
 `DOMContentLoaded`):
 
 ```js
-import '../../vendor/depa/sulu-block-helper/Resources/js/website';
+import '../../vendor/depa/sulu-block-helper/assets/website';
 ```
 
 Then rebuild your website assets. This is only needed if you actually use the
