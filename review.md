@@ -77,9 +77,10 @@ Empfohlene Reihenfolge: **K1 → K5 → K2/K3 → W1–W3/W5/W8 → K4+W6/W10 �
 - **Erledigt** (`sulu-block-content@b6512eb`): Komma ergänzt. Funktional bewiesen per isoliertem Twig-Render (3 Fake-FAQ-Einträge, `script`-Block gerendert, JSON extrahiert): **vorher** `json_decode` → Syntax-Fehler (Bug bestätigt), **nachher** valide mit allen 3 `Question`-Objekten.
 
 ### W6 — content: README stimmt nicht mit Bestand überein
-- [ ] `README.md:3` „29 blocks“ / Tabelle: tatsächlich 30 Definitionen; **`template-var` fehlt** (dient als Kind von `block--content-html-template` — dokumentieren).
-- [ ] `README.md:46-50`: `composer require` allein funktioniert nicht (proprietär, nicht auf Packagist). `repositories` in der Bundle-composer.json wirkt nur im Root-Kontext; Konsumenten müssen VCS-Repos für content **und** helper (ggf. preview-nav) selbst eintragen → ins README.
-- [ ] `README.md:22` „Raw HTML block“ — `block--content-html` nutzt `text_editor` (CKEditor), kein Raw-Feld.
+- [x] `README.md:3` „29 blocks“ / Tabelle: tatsächlich 30 Definitionen; **`template-var` fehlt** (dient als Kind von `block--content-html-template` — dokumentieren).
+- [x] `README.md:46-50`: `composer require` allein funktioniert nicht (proprietär, nicht auf Packagist). `repositories` in der Bundle-composer.json wirkt nur im Root-Kontext; Konsumenten müssen VCS-Repos für content **und** helper (ggf. preview-nav) selbst eintragen → ins README.
+- [x] `README.md:22` „Raw HTML block“ — `block--content-html` nutzt `text_editor` (CKEditor), kein Raw-Feld.
+- **Erledigt** (`sulu-block-content@f4e8477`): Tabellenzeile für `block--content-html` auf „Rich text block (CKEditor, rendered unescaped)“ korrigiert; Hinweis auf `template-var.xml` als Kind-Typ von `block--content-html-template` ergänzt (29 echte Blöcke bleiben korrekt, die 30. Datei ist jetzt erklärt); Installationsabschnitt um den fehlenden `repositories`-VCS-Eintrag (für content **und** helper, beide proprietär/nicht auf Packagist, aber öffentlich auf GitHub — `https://github.com/depa-berlin/...`) ergänzt, `composer require` auf `:dev-main` präzisiert.
 
 ### W7 — beide: „Shared“ Fragmente sind dupliziert statt geteilt
 - [x] `attr_class.xml`, `attr_id.xml`, `config_image.xml` liegen **byte-identisch** in helper und content; referenziert werden per `<xi:include href="../_fragments/…">` ausschließlich die **lokalen** Kopien → Helper-Fragmente sind toter Code, Drift vorprogrammiert.
