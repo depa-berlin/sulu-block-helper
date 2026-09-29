@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 /**
- * Base bundle for the depa/sulu-block-* family.
+ * Base bundle for the depa/sulu-block-*-bundle family.
  *
  * Registers the bundle's block-template directory with sulu_admin and its Twig
  * templates, and exposes the block metadata as container parameters. Paths are
@@ -74,7 +74,7 @@ abstract class AbstractBlockBundle extends AbstractBundle
 
     /**
      * Underscored bundle name without the "Bundle" suffix, e.g.
-     * SuluBlockContentBundle -> "sulu_block_content". Used as the sulu_admin
+     * DepaSuluBlockContentBundle -> "depa_sulu_block_content". Used as the sulu_admin
      * block-directory key and as the container-parameter prefix.
      */
     protected function getBlockAlias(): string

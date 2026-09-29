@@ -7,7 +7,7 @@ namespace Depa\SuluBlockHelperBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-class SuluBlockHelperBundle extends AbstractBlockBundle
+class DepaSuluBlockHelperBundle extends AbstractBlockBundle
 {
     /**
      * @param array<string, mixed> $config

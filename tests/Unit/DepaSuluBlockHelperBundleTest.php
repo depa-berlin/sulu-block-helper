@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Depa\SuluBlockHelperBundle\Tests\Unit;
 
-use Depa\SuluBlockHelperBundle\SuluBlockHelperBundle;
+use Depa\SuluBlockHelperBundle\DepaSuluBlockHelperBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class SuluBlockHelperBundleTest extends TestCase
+class DepaSuluBlockHelperBundleTest extends TestCase
 {
     private ContainerBuilder $container;
-    private SuluBlockHelperBundle $bundle;
+    private DepaSuluBlockHelperBundle $bundle;
 
     protected function setUp(): void
     {
@@ -22,7 +22,7 @@ class SuluBlockHelperBundleTest extends TestCase
         // ContainerConfigurator passed to prependExtension()/loadExtension().
         $this->container->setParameter('kernel.environment', 'test');
         $this->container->setParameter('kernel.build_dir', sys_get_temp_dir());
-        $this->bundle = new SuluBlockHelperBundle();
+        $this->bundle = new DepaSuluBlockHelperBundle();
     }
 
     private function getExtension(): ExtensionInterface&PrependExtensionInterface
@@ -38,8 +38,8 @@ class SuluBlockHelperBundleTest extends TestCase
     {
         $this->getExtension()->load([], $this->container);
 
-        self::assertTrue($this->container->hasParameter('sulu_block_helper.bundle_metadata'));
-        self::assertTrue($this->container->hasParameter('sulu_block_helper.blocks_dir'));
+        self::assertTrue($this->container->hasParameter('depa_sulu_block_helper.bundle_metadata'));
+        self::assertTrue($this->container->hasParameter('depa_sulu_block_helper.blocks_dir'));
     }
 
     public function testPrependRegistersTwigPathWhenTwigIsAvailable(): void

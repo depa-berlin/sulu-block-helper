@@ -1,8 +1,8 @@
-# sulu-block-helper
+# sulu-block-helper-bundle
 
 Shared base classes, XML fragments and Twig partials for Sulu CMS block bundles.
 
-This bundle provides the common foundation that all other `depa/sulu-block-*` bundles depend on.
+This bundle provides the common foundation that all other `depa/sulu-block-*-bundle` bundles depend on.
 
 ## Contents
 
@@ -63,7 +63,7 @@ Must be imported into your project's **website** asset build — see below.
 ## Installation
 
 ```bash
-composer require depa/sulu-block-helper
+composer require depa/sulu-block-helper-bundle
 ```
 
 If your project uses **Symfony Flex** (the default in the Sulu/Symfony
@@ -74,7 +74,7 @@ registration.
 Without Symfony Flex, register the bundle manually in `config/bundles.php`:
 
 ```php
-Depa\SuluBlockHelperBundle\SuluBlockHelperBundle::class => ['all' => true],
+Depa\SuluBlockHelperBundle\DepaSuluBlockHelperBundle::class => ['all' => true],
 ```
 
 ### Admin build (required)
@@ -87,7 +87,7 @@ in the admin with *"There is no field with key 'config_line' registered"*.
 1. Add the import to `assets/admin/app.js`:
 
    ```js
-   import '../../vendor/depa/sulu-block-helper/assets';
+   import '../../vendor/depa/sulu-block-helper-bundle/assets';
    ```
 
 2. Rebuild the admin:
@@ -108,7 +108,7 @@ project's **website** asset entry (the file self-initialises on
 `DOMContentLoaded`):
 
 ```js
-import '../../vendor/depa/sulu-block-helper/assets/website';
+import '../../vendor/depa/sulu-block-helper-bundle/assets/website';
 ```
 
 Then rebuild your website assets. This is only needed if you actually use the

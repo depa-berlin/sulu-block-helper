@@ -1,6 +1,6 @@
-// Website (frontend) entry for the depa/sulu-block-* bundles.
+// Website (frontend) entry for the depa/sulu-block-*-bundle bundles.
 // Import this once in your project's website asset build, e.g.:
-//   import '../../vendor/depa/sulu-block-helper/assets/website';
+//   import '../../vendor/depa/sulu-block-helper-bundle/assets/website';
 //
 // It powers the `obfuscate` Twig function (Depa\SuluBlockHelperBundle\Twig\
 // ObfuscateExtension): the markup ships the email ROT13-encoded inside the
