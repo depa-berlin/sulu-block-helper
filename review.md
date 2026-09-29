@@ -90,8 +90,9 @@ Empfohlene Reihenfolge: **K1 → K5 → K2/K3 → W1–W3/W5/W8 → K4+W6/W10 �
 - **⚠️ title-icon-Inline-„Duplikat" — Befund weicht vom Review ab:** siehe separate Analyse unten / offene Rückfrage. Das Twig nutzt `loading`/`fetchpriority_high`/`is_decorative`, **nicht** `enable_x2` — korrekt, da title-icon ein **SVG-Icon** rendert (Retina/2x sinnlos). Das Inline ist also ein **bewusster 3-Felder-Subset**, kein versehentlicher Drift; der Review-Vorschlag „durch `config_image.xml`-Include ersetzen" würde fälschlich `enable_x2` hinzufügen (totes + semantisch falsches Feld). Ein eigenes 3-Felder-Fragment wäre Single-Consumer → widerspricht dem gerade bei W3 etablierten Prinzip. **Empfehlung: inline lassen.** (Checkbox bewusst offen bis Nutzer-Entscheidung.)
 
 ### W8 — content: Preview-Attribut fehlt am title-icon-Hauptelement
-- [ ] `block--content-title-icon.html.twig:28-32` — nur der Fehler-Alert (Z. 16) hat `sulu_block_preview(content)` → Preview-Klick-Navigation für den Block tot.
+- [x] `block--content-title-icon.html.twig:28-32` — nur der Fehler-Alert (Z. 16) hat `sulu_block_preview(content)` → Preview-Klick-Navigation für den Block tot.
 - **Fix:** Aufruf nach dem aria-Include am Hauptelement ergänzen.
+- **Erledigt** (`sulu-block-content@870f553` + `0613f11`): `sulu_block_preview(content)` vom Fehler-Alert auf das Haupt-Element **verschoben** — ein Marker pro Block, wie bei allen anderen Blöcken (erster Commit hatte ihn noch dupliziert, zweiter räumt das auf). Die Funktion ist zustandslos (rendert nur `data-sulu-block-preview='{"id","type"}'` aus `content._id`/`content.type`, geprüft in `lubomirfiala/sulu-preview-nav`). Verifiziert: `bin/console lint:twig` im test-project grün.
 
 ### W9 — content: `_slots.yaml` ohne Konsument + Asymmetrien
 - [ ] Alle gelisteten Keys existieren ✓, aber: das in Commit `cdf624d` erwähnte `GenerateSlotsCommand`/`BlockSlotCollector` existiert nirgends → tote Konfiguration.
